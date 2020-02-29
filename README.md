@@ -17,3 +17,23 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+## Run as container
+
+```
+docker build -t bside .
+docker run -it --network=bside-net -v $(PWD):/app bside /bin/bash
+```
+
+- Production-like:
+
+```
+docker build -f Dockerfile.prod -t bside-prod .
+docker run --network bside-net -p 8001:8001 -it bside-prod /bin/bash
+
+# sample values
+export DATABASE_URL=ecto://postgres:postgres@postgres/bside_prod
+export SECRET_KEY_BASE=cznBoUciJrp5tsTTu0U2LXzWrRdA1hdfqjl0acDuHncRFM5JbE/pqEs2qWwVIHW
+/app/bin/bside eval "Bside.Release.migrate"
+/app/bin/bside start
+```
