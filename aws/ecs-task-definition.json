@@ -1,0 +1,47 @@
+{
+  "family": "bside-ec2",
+  "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::640306060358:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "bside-api",
+      "image": "640306060358.dkr.ecr.eu-north-1.amazonaws.com/bside-repository:bside-prod",
+      "portMappings": [
+        {
+          "containerPort": 4000,
+          "hostPort": 4000,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/bside-task-definition",
+          "awslogs-region": "eu-north-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "essential": true,
+      "entryPoint": [
+        "sh",
+        "-c"
+      ],
+      "command": [
+        "/bin/bash /app/bin/bside start"
+      ],
+      "secrets": [
+        {
+          "name": "DATABASE_URL",
+          "valueFrom": "arn:aws:ssm:eu-north-1:640306060358:parameter/BSIDE_API_DATABASE_URL"
+        },
+        {
+          "name": "SECRET_KEY_BASE",
+          "valueFrom": "arn:aws:ssm:eu-north-1:640306060358:parameter/BSIDE_API_SECRET_KEY_BASE"
+        }
+      ]
+    }
+  ],
+  "requiresCompatibilities": [],
+  "cpu": "300",
+  "memory": "300"
+}

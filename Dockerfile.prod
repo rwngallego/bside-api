@@ -8,7 +8,7 @@ RUN mix local.hex --force
 RUN mix local.rebar --force
 
 ENV MIX_ENV=prod
-ENV PORT=8001
+ENV PORT=4000
 
 COPY ./ /code
 

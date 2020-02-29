@@ -29,12 +29,13 @@ on:
     branches:
       - master
 
-name: Test and deploy to Amazon ECS
+name: CI/CD
 
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
     - name: Checkout
@@ -67,6 +68,7 @@ jobs:
     name: Deploy to ECS
     runs-on: ubuntu-latest
     needs: test
+    timeout-minutes: 10
 
     steps:
     - name: Checkout
@@ -101,14 +103,14 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: task-definition.json
-        container-name: sample-app
+        task-definition: aws/ecs-task-definition.json
+        container-name: bside-api
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: sample-app-service
+        service: bside-api-service
         cluster: default
         wait-for-service-stability: true

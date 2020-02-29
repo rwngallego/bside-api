@@ -1,4 +1,10 @@
-# Bside
+# Bside API
+
+![CI/CD](https://github.com/rwngallego/bside/workflows/CI/CD/badge.svg)
+
+Runs the API server
+
+## Quick start
 
 To start your Phoenix server:
 
@@ -8,28 +14,26 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## ECS
 
-## Learn more
+- Update the task definition manually
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+```
+aws ecs register-task-definition --region eu-north-1 --cli-input-json file://aws/ecs-task-definition.json
+```
 
 ## Run as container
 
 ```
 docker build -t bside .
-docker run -it --network=bside-net -v $(PWD):/app bside /bin/bash
+docker run --network=bside-net -p 4000:4000 -v $(PWD):/app -it bside /bin/bash
 ```
 
 - Production-like:
 
 ```
 docker build -f Dockerfile.prod -t bside-prod .
-docker run --network bside-net -p 8001:8001 -it bside-prod /bin/bash
+docker run --network bside-net -p 4000:4000 -it bside-prod /bin/bash
 
 # sample values
 export DATABASE_URL=ecto://postgres:postgres@postgres/bside_prod
