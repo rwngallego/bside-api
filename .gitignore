@@ -28,3 +28,5 @@ bside-*.tar
 /priv/static/
 
 .DS_Store
+
+tmp/

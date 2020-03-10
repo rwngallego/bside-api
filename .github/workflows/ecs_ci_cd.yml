@@ -26,8 +26,11 @@
 
 on:
   push:
-    branches:
-      - master
+# We disable the workflow temporarily.
+#    branches:
+#      - master
+    branches-ignore:
+      - '**'
 
 name: CI/CD
 

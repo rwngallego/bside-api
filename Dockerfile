@@ -1,10 +1,5 @@
-FROM elixir:1.10.1-slim
+FROM rwngallego/asdf:centos7.7-elixir
 
-SHELL ["/bin/bash", "-c"]
-
-RUN apt-get update
-
-RUN mix local.hex --force
-RUN mix local.rebar --force
+SHELL ["/bin/bash", "-c", "-l"]
 
 WORKDIR /app
