@@ -1,18 +1,16 @@
 FROM rwngallego/asdf:centos7.7-elixir
 
-SHELL ["/bin/bash", "-c", "-l"]
-
 ENV MIX_ENV=prod
 ENV PORT=4000
 
 COPY ./ /code
 
-# We build the release in /app
+# We build the release in /app/bside-api
 RUN cd /code && \
   mix deps.get --only prod && \
-  mix release --path /app && \
-  cd /app && rm -rf /code
+  mix release --path /app/bside-api && \
+  cd /app/bside-api && rm -rf /code
 
 # Last setup
 ENV HOME=/app
-WORKDIR /app
+WORKDIR /app/bside-api
