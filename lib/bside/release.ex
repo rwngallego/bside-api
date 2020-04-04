@@ -1,4 +1,7 @@
 defmodule Bside.Release do
+  @moduledoc """
+  External commands used in the release tasks
+  """
   @app :bside
 
   def migrate do

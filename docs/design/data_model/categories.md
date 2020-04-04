@@ -8,7 +8,6 @@ Considerations:
  
  ## Fields
 
-- id: uuid
 - parent_id: uuid
 - name: string
 - description: string

@@ -1,4 +1,8 @@
 defmodule Bside.Catalog.Category do
+  @moduledoc """
+  Category
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 

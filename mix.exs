@@ -33,11 +33,15 @@ defmodule Bside.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:absinthe_ecto, "~> 0.1.0"},
-      {:absinthe_plug, "~> 1.3.0"},
+      {:absinthe, "~> 1.4"},
+      {:absinthe_plug, "~> 1.4.0"},
+      {:dataloader, "~> 1.0.0"},
+      {:credo, "~> 1.3", only: [:dev, :test], runtime: false},
+      {:ex_machina, "~> 2.4", only: [:dev, :test]},
       {:phoenix, "~> 1.4.14"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
+      {:poison, "~> 2.1.0"},
       {:ecto_sql, "~> 3.1"},
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
