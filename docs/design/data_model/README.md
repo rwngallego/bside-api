@@ -50,10 +50,9 @@ Table | Description
 [Related upsell]() | Products for up saling
 [Related crossell]() | Products for cross saling
 [Variants]() | The variants of the products (S, M, XL)
-[Product categories]() | Group of products
+[Categories]() | Group of products
 [Coupons]() | Contains the rules of the coupons
 [Prices]() | The price of the products
-[Reviews]() | Reviews for a product
 
 ### Store
 
@@ -68,6 +67,7 @@ Table | Description
 [Whishlist]() | The products that the user wish to buy someday
 [Adjustments]() | Contains the adjustments of the purchase
 [Refunds]() | The orders that have been refunded
+[Reviews]() | Reviews for a product
 
 ### Accounting
 
