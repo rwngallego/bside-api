@@ -43,7 +43,6 @@ defmodule Bside.Catalog.Category do
       :is_main_menu
     ])
     |> validate_required([
-      :parent_id,
       :name,
       :description,
       :image,

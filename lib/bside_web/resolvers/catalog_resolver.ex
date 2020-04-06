@@ -1,4 +1,4 @@
-defmodule BsideWeb.Resolvers.Catalog do
+defmodule BsideWeb.CatalogResolver do
   @moduledoc """
   Catalog resolvers
   """
@@ -11,18 +11,24 @@ defmodule BsideWeb.Resolvers.Catalog do
   end
 
   def get_category(_root, %{id: id}, _info) do
-    category = Catalog.get_category!(id)
-    {:ok, category}
+    case Catalog.get_category(id) do
+      nil ->
+        Log.error("Category not found", %{id: id})
+        {:error, :not_found}
+
+      category ->
+        {:ok, category}
+    end
   end
 
-  def create_category(_root, args, _info) do
-    case Catalog.create_category(args) do
+  def create_category(_root, %{category: category_args}, _info) do
+    case Catalog.create_category(category_args) do
       {:ok, category} ->
         {:ok, category}
 
       error ->
         Log.error("Error creating the category", %{error: error})
-        {:error, "Could not create category"}
+        error
     end
   end
 end

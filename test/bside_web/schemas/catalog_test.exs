@@ -1,4 +1,4 @@
-defmodule BsideTest.Schema.Catalog do
+defmodule BsideTest.Schema.CatalogTest do
   use BsideWeb.ConnCase
   import Bside.CatalogFactory
 
@@ -30,23 +30,6 @@ defmodule BsideTest.Schema.Catalog do
       assert res == %{"data" => %{"category" => expected}}
     end
 
-    test "return error when not found", %{conn: conn} do
-      query = """
-      {
-        category(id: "1") {
-          id
-        }
-      }
-      """
-
-      res =
-        conn
-        |> post("/api", %{query: query})
-        |> json_response(200)
-
-      assert res == %{"data" => %{"category" => []}}      
-    end
-
     test "get categories list", %{conn: conn, categories: categories} do
       query = """
       {
@@ -67,6 +50,24 @@ defmodule BsideTest.Schema.Catalog do
       expected = category_list(categories)
 
       assert res == %{"data" => %{"categories" => expected}}
+    end
+
+    test "return error when not found", %{conn: conn} do
+      query = """
+      {
+        category(id: "9999") {
+          id
+        }
+      }
+      """
+
+      res =
+        conn
+        |> post("/api", %{query: query})
+        |> json_response(200)
+
+      assert nil == res["data"]["category"]
+      assert "not_found" == List.first(res["errors"])["message"]
     end
   end
 

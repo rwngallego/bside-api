@@ -38,6 +38,20 @@ defmodule Bside.Catalog do
   def get_category!(id), do: Repo.get!(Category, id)
 
   @doc """
+  Gets a single category.
+
+  ## Examples
+
+      iex> get_category(123)
+      %Category{}
+
+      iex> get_category(456)
+      nil
+
+  """
+  def get_category(id), do: Repo.get(Category, id)
+
+  @doc """
   Creates a category.
 
   ## Examples
