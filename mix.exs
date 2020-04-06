@@ -35,6 +35,7 @@ defmodule Bside.MixProject do
     [
       {:absinthe, "~> 1.4"},
       {:absinthe_plug, "~> 1.4.0"},
+      {:absinthe_error_payload, "~> 1.0"},
       {:dataloader, "~> 1.0.0"},
       {:credo, "~> 1.3", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.4", only: [:dev, :test]},
