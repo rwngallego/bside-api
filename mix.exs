@@ -38,7 +38,7 @@ defmodule Bside.MixProject do
       {:absinthe_error_payload, "~> 1.0"},
       {:dataloader, "~> 1.0.0"},
       {:credo, "~> 1.3", only: [:dev, :test], runtime: false},
-      {:ex_machina, "~> 2.4", only: [:dev, :test]},
+      {:ex_machina, "~> 2.4"},
       {:phoenix, "~> 1.4.14"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
