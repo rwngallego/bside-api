@@ -1,4 +1,4 @@
-defmodule BsideTest.CatalogSchemaTest do
+defmodule BsideTest.CategorySchemaTest do
   use BsideWeb.ConnCase
   import Bside.CatalogFactory
 
@@ -11,7 +11,7 @@ defmodule BsideTest.CatalogSchemaTest do
   @api_path "/graphql/v1"
 
   describe "categories" do
-    test "get a category by id", %{conn: conn, categories: [category | _]} do
+    test "get by id", %{conn: conn, categories: [category | _]} do
       query = """
       {
         category(id: "#{category.id}") {
@@ -32,7 +32,7 @@ defmodule BsideTest.CatalogSchemaTest do
       assert res == %{"data" => %{"category" => expected}}
     end
 
-    test "get categories list", %{conn: conn, categories: categories} do
+    test "get list", %{conn: conn, categories: categories} do
       query = """
       {
         categories {
@@ -72,7 +72,7 @@ defmodule BsideTest.CatalogSchemaTest do
       assert "not_found" == List.first(res["errors"])["message"]
     end
 
-    test "create category", %{conn: conn} do
+    test "create", %{conn: conn} do
       query = """
         mutation {
           createCategory(
