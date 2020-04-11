@@ -13,21 +13,21 @@ defmodule BsideWeb.Router do
 
   get "/status", ApiController, :status
 
-  scope "/rest/api/v1", BsideWeb do
+  scope "/api/v1", BsideWeb do
     pipe_through :api
 
     resources "/categories", CategoryController, except: [:new, :edit]
   end
 
-  scope "/" do
+  scope "/graphql" do
     pipe_through :graphql
 
     # GraphiQL
     if Mix.env() == :dev do
-      forward "/graphiql", Absinthe.Plug.GraphiQL, schema: BsideWeb.Schema
+      forward "/explore", Absinthe.Plug.GraphiQL, schema: BsideWeb.Schema
     end
 
     # GraphQL API
-    forward "/api", Absinthe.Plug, schema: BsideWeb.Schema
+    forward "/v1", Absinthe.Plug, schema: BsideWeb.Schema
   end
 end

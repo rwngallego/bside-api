@@ -8,6 +8,8 @@ defmodule BsideTest.CatalogSchemaTest do
     ]
   end
 
+  @api_path "/graphql/v1"
+
   describe "categories" do
     test "get a category by id", %{conn: conn, categories: [category | _]} do
       query = """
@@ -23,7 +25,7 @@ defmodule BsideTest.CatalogSchemaTest do
 
       res =
         conn
-        |> post("/api", %{query: query})
+        |> post(@api_path, %{query: query})
         |> json_response(200)
 
       expected = category |> get_values()
@@ -44,7 +46,7 @@ defmodule BsideTest.CatalogSchemaTest do
 
       res =
         conn
-        |> post("/api", %{query: query})
+        |> post(@api_path, %{query: query})
         |> json_response(200)
 
       expected = category_list(categories)
@@ -63,7 +65,7 @@ defmodule BsideTest.CatalogSchemaTest do
 
       res =
         conn
-        |> post("/api", %{query: query})
+        |> post(@api_path, %{query: query})
         |> json_response(200)
 
       assert nil == res["data"]["category"]
@@ -103,7 +105,7 @@ defmodule BsideTest.CatalogSchemaTest do
 
       res =
         conn
-        |> post("/api", %{query: query})
+        |> post(@api_path, %{query: query})
         |> json_response(200)
 
       response = res["data"]["createCategory"]
@@ -143,7 +145,7 @@ defmodule BsideTest.CatalogSchemaTest do
 
       res =
         conn
-        |> post("/api", %{query: query})
+        |> post(@api_path, %{query: query})
         |> json_response(200)
 
       response = res["data"]["createCategory"]
