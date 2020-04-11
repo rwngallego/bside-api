@@ -40,6 +40,16 @@ defmodule BsideWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
+
+  # Cors configuration
+  plug Corsica,
+    origins: [
+      "http://localhost:3000",
+      ~r{^http?://(.*\.?)perfecty\.co$}
+    ],
+    allow_headers: :all,
+    log: []
+
   plug Plug.Session, @session_options
   plug BsideWeb.Router
 end
