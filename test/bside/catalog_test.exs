@@ -15,11 +15,12 @@ defmodule Bside.CatalogTest do
       meta_description: "some meta_description",
       meta_keywords: "some meta_keywords",
       name: "some name",
-      page_title: "some page_title",
+      meta_title: "some meta_title",
       parent_id: "7488a646-e31f-11e4-aace-600308960662",
       publish_date: "2010-04-17T14:00:00Z",
       slug: "some slug",
-      sort_order: "some sort_order"
+      sort_order: "some sort_order",
+      position: 1
     }
     @update_attrs %{
       description: "some updated description",
@@ -30,11 +31,12 @@ defmodule Bside.CatalogTest do
       meta_description: "some updated meta_description",
       meta_keywords: "some updated meta_keywords",
       name: "some updated name",
-      page_title: "some updated page_title",
+      meta_title: "some updated meta_title",
       parent_id: "7488a646-e31f-11e4-aace-600308960668",
       publish_date: "2011-05-18T15:01:01Z",
       slug: "some updated slug",
-      sort_order: "some updated sort_order"
+      sort_order: "some updated sort_order",
+      position: 2
     }
     @invalid_attrs %{
       description: nil,
@@ -45,11 +47,12 @@ defmodule Bside.CatalogTest do
       meta_description: nil,
       meta_keywords: nil,
       name: nil,
-      page_title: nil,
+      meta_title: nil,
       parent_id: nil,
       publish_date: nil,
       slug: nil,
-      sort_order: nil
+      sort_order: nil,
+      position: nil
     }
 
     def category_fixture(attrs \\ %{}) do
@@ -81,11 +84,12 @@ defmodule Bside.CatalogTest do
       assert category.meta_description == "some meta_description"
       assert category.meta_keywords == "some meta_keywords"
       assert category.name == "some name"
-      assert category.page_title == "some page_title"
+      assert category.meta_title == "some meta_title"
       assert category.parent_id == "7488a646-e31f-11e4-aace-600308960662"
       assert category.publish_date == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
       assert category.slug == "some slug"
       assert category.sort_order == "some sort_order"
+      assert category.position == 1
     end
 
     test "create_category/1 with invalid data returns error changeset" do
@@ -103,11 +107,12 @@ defmodule Bside.CatalogTest do
       assert category.meta_description == "some updated meta_description"
       assert category.meta_keywords == "some updated meta_keywords"
       assert category.name == "some updated name"
-      assert category.page_title == "some updated page_title"
+      assert category.meta_title == "some updated meta_title"
       assert category.parent_id == "7488a646-e31f-11e4-aace-600308960668"
       assert category.publish_date == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
       assert category.slug == "some updated slug"
       assert category.sort_order == "some updated sort_order"
+      assert category.position == 2
     end
 
     test "update_category/2 with invalid data returns error changeset" do

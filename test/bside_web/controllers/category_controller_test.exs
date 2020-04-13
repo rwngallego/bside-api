@@ -13,11 +13,12 @@ defmodule BsideWeb.CategoryControllerTest do
     meta_description: "some meta_description",
     meta_keywords: "some meta_keywords",
     name: "some name",
-    page_title: "some page_title",
+    meta_title: "some meta_title",
     parent_id: "7488a646-e31f-11e4-aace-600308960662",
     publish_date: "2010-04-17T14:00:00Z",
     slug: "some slug",
-    sort_order: "some sort_order"
+    sort_order: "some sort_order",
+    position: 1
   }
   @update_attrs %{
     description: "some updated description",
@@ -28,11 +29,12 @@ defmodule BsideWeb.CategoryControllerTest do
     meta_description: "some updated meta_description",
     meta_keywords: "some updated meta_keywords",
     name: "some updated name",
-    page_title: "some updated page_title",
+    meta_title: "some updated meta_title",
     parent_id: "7488a646-e31f-11e4-aace-600308960668",
     publish_date: "2011-05-18T15:01:01Z",
     slug: "some updated slug",
-    sort_order: "some updated sort_order"
+    sort_order: "some updated sort_order",
+    position: 2
   }
   @invalid_attrs %{
     description: nil,
@@ -43,11 +45,12 @@ defmodule BsideWeb.CategoryControllerTest do
     meta_description: nil,
     meta_keywords: nil,
     name: nil,
-    page_title: nil,
+    meta_title: nil,
     parent_id: nil,
     publish_date: nil,
     slug: nil,
-    sort_order: nil
+    sort_order: nil,
+    position: nil
   }
 
   def fixture(:category) do
@@ -83,11 +86,12 @@ defmodule BsideWeb.CategoryControllerTest do
                "meta_description" => "some meta_description",
                "meta_keywords" => "some meta_keywords",
                "name" => "some name",
-               "page_title" => "some page_title",
+               "meta_title" => "some meta_title",
                "parent_id" => "7488a646-e31f-11e4-aace-600308960662",
                "publish_date" => "2010-04-17T14:00:00Z",
                "slug" => "some slug",
-               "sort_order" => "some sort_order"
+               "sort_order" => "some sort_order",
+               "position" => 1
              } = json_response(conn, 200)["data"]
     end
 
@@ -119,11 +123,12 @@ defmodule BsideWeb.CategoryControllerTest do
                "meta_description" => "some updated meta_description",
                "meta_keywords" => "some updated meta_keywords",
                "name" => "some updated name",
-               "page_title" => "some updated page_title",
+               "meta_title" => "some updated meta_title",
                "parent_id" => "7488a646-e31f-11e4-aace-600308960668",
                "publish_date" => "2011-05-18T15:01:01Z",
                "slug" => "some updated slug",
-               "sort_order" => "some updated sort_order"
+               "sort_order" => "some updated sort_order",
+               "position" => 2
              } = json_response(conn, 200)["data"]
     end
 

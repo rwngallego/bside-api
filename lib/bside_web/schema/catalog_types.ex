@@ -16,7 +16,7 @@ defmodule BsideWeb.Schema.CatalogTypes do
     field(:description, non_null(:string))
     field(:image, :string)
     field(:slug, non_null(:string))
-    field(:page_title, non_null(:string))
+    field(:meta_title, non_null(:string))
     field(:meta_keywords, :string)
     field(:meta_description, :string)
     field(:publish_date, :naive_datetime)
@@ -24,6 +24,7 @@ defmodule BsideWeb.Schema.CatalogTypes do
     field(:is_visible, :boolean)
     field(:is_home, :boolean)
     field(:is_main_menu, :boolean)
+    field(:position, :integer)
   end
 
   @desc "Editable category fields"
@@ -32,7 +33,7 @@ defmodule BsideWeb.Schema.CatalogTypes do
     field(:description, non_null(:string))
     field(:image, :string)
     field(:slug, non_null(:string))
-    field(:page_title, non_null(:string))
+    field(:meta_title, non_null(:string))
     field(:meta_keywords, :string)
     field(:meta_description, :string)
     field(:publish_date, :naive_datetime)
@@ -40,6 +41,7 @@ defmodule BsideWeb.Schema.CatalogTypes do
     field(:is_visible, :boolean)
     field(:is_home, :boolean)
     field(:is_main_menu, :boolean)
+    field(:position, :integer)
   end
 
   payload_object(:category_payload, :category)

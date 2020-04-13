@@ -80,12 +80,13 @@ defmodule BsideTest.CategorySchemaTest do
               name: "Test Category creation",
               description: "Description 1",
               slug: "category",
-              pageTitle: "Category 0 title",
+              metaTitle: "Category 0 title",
               image: "ddd",
               metaKeywords: "sss",
               metaDescription: "sss",
               publishDate: "2020-04-07 10:00:00",
-              sortOrder: "eee"
+              sortOrder: "eee",
+              position: 1
             }
           ) {
             result {
@@ -122,7 +123,7 @@ defmodule BsideTest.CategorySchemaTest do
               name: "",
               description: "Description 1",
               slug: "category",
-              pageTitle: "Category 0 title",
+              metaTitle: "Category 0 title",
               image: "ddd",
               metaKeywords: "sss",
               metaDescription: "sss",
