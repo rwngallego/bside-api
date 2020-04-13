@@ -503,4 +503,79 @@ defmodule Bside.CatalogTest do
       assert %Ecto.Changeset{} = Catalog.change_vendor(vendor)
     end
   end
+
+  describe "product_options" do
+    alias Bside.Catalog.ProductOption
+
+    @valid_attrs %{description: "some description", name: "some name", options: %{}}
+    @update_attrs %{
+      description: "some updated description",
+      name: "some updated name",
+      options: %{}
+    }
+    @invalid_attrs %{description: nil, name: nil, options: nil}
+
+    def product_option_fixture(attrs \\ %{}) do
+      {:ok, product_option} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Catalog.create_product_option()
+
+      product_option
+    end
+
+    test "list_product_options/0 returns all product_options" do
+      product_option = product_option_fixture()
+      assert Catalog.list_product_options() == [product_option]
+    end
+
+    test "get_product_option!/1 returns the product_option with given id" do
+      product_option = product_option_fixture()
+      assert Catalog.get_product_option!(product_option.id) == product_option
+    end
+
+    test "create_product_option/1 with valid data creates a product_option" do
+      assert {:ok, %ProductOption{} = product_option} =
+               Catalog.create_product_option(@valid_attrs)
+
+      assert product_option.description == "some description"
+      assert product_option.name == "some name"
+      assert product_option.options == %{}
+    end
+
+    test "create_product_option/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Catalog.create_product_option(@invalid_attrs)
+    end
+
+    test "update_product_option/2 with valid data updates the product_option" do
+      product_option = product_option_fixture()
+
+      assert {:ok, %ProductOption{} = product_option} =
+               Catalog.update_product_option(product_option, @update_attrs)
+
+      assert product_option.description == "some updated description"
+      assert product_option.name == "some updated name"
+      assert product_option.options == %{}
+    end
+
+    test "update_product_option/2 with invalid data returns error changeset" do
+      product_option = product_option_fixture()
+
+      assert {:error, %Ecto.Changeset{}} =
+               Catalog.update_product_option(product_option, @invalid_attrs)
+
+      assert product_option == Catalog.get_product_option!(product_option.id)
+    end
+
+    test "delete_product_option/1 deletes the product_option" do
+      product_option = product_option_fixture()
+      assert {:ok, %ProductOption{}} = Catalog.delete_product_option(product_option)
+      assert_raise Ecto.NoResultsError, fn -> Catalog.get_product_option!(product_option.id) end
+    end
+
+    test "change_product_option/1 returns a product_option changeset" do
+      product_option = product_option_fixture()
+      assert %Ecto.Changeset{} = Catalog.change_product_option(product_option)
+    end
+  end
 end

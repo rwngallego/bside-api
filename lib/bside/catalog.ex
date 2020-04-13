@@ -403,4 +403,100 @@ defmodule Bside.Catalog do
   def change_vendor(%Vendor{} = vendor) do
     Vendor.changeset(vendor, %{})
   end
+
+  alias Bside.Catalog.ProductOption
+
+  @doc """
+  Returns the list of product_options.
+
+  ## Examples
+
+      iex> list_product_options()
+      [%ProductOption{}, ...]
+
+  """
+  def list_product_options do
+    Repo.all(ProductOption)
+  end
+
+  @doc """
+  Gets a single product_option.
+
+  Raises `Ecto.NoResultsError` if the Product option does not exist.
+
+  ## Examples
+
+      iex> get_product_option!(123)
+      %ProductOption{}
+
+      iex> get_product_option!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_product_option!(id), do: Repo.get!(ProductOption, id)
+
+  @doc """
+  Creates a product_option.
+
+  ## Examples
+
+      iex> create_product_option(%{field: value})
+      {:ok, %ProductOption{}}
+
+      iex> create_product_option(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_product_option(attrs \\ %{}) do
+    %ProductOption{}
+    |> ProductOption.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a product_option.
+
+  ## Examples
+
+      iex> update_product_option(product_option, %{field: new_value})
+      {:ok, %ProductOption{}}
+
+      iex> update_product_option(product_option, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_product_option(%ProductOption{} = product_option, attrs) do
+    product_option
+    |> ProductOption.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a product_option.
+
+  ## Examples
+
+      iex> delete_product_option(product_option)
+      {:ok, %ProductOption{}}
+
+      iex> delete_product_option(product_option)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_product_option(%ProductOption{} = product_option) do
+    Repo.delete(product_option)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking product_option changes.
+
+  ## Examples
+
+      iex> change_product_option(product_option)
+      %Ecto.Changeset{source: %ProductOption{}}
+
+  """
+  def change_product_option(%ProductOption{} = product_option) do
+    ProductOption.changeset(product_option, %{})
+  end
 end
