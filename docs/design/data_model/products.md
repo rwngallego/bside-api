@@ -76,6 +76,7 @@ table: products
 - is_taxable: bool
 - is_visible: bool
 - is_physical: bool
+- options: map
 - discontinue_on: utc_datetime
 - position: integer
 

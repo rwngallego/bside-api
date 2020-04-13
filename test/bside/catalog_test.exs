@@ -152,6 +152,7 @@ defmodule Bside.CatalogTest do
       meta_keywords: "some meta_keywords",
       meta_title: "some meta_title",
       name: "some name",
+      options: %{},
       position: 42,
       price: %{},
       sku: "some sku",
@@ -175,6 +176,7 @@ defmodule Bside.CatalogTest do
       meta_keywords: "some updated meta_keywords",
       meta_title: "some updated meta_title",
       name: "some updated name",
+      options: %{},
       position: 43,
       price: %{},
       sku: "some updated sku",
@@ -198,6 +200,7 @@ defmodule Bside.CatalogTest do
       meta_keywords: nil,
       meta_title: nil,
       name: nil,
+      options: nil,
       position: nil,
       price: nil,
       sku: nil,
@@ -242,6 +245,7 @@ defmodule Bside.CatalogTest do
       assert product.meta_keywords == "some meta_keywords"
       assert product.meta_title == "some meta_title"
       assert product.name == "some name"
+      assert product.options == %{}
       assert product.position == 42
       assert product.price == %{}
       assert product.sku == "some sku"
@@ -272,6 +276,7 @@ defmodule Bside.CatalogTest do
       assert product.meta_keywords == "some updated meta_keywords"
       assert product.meta_title == "some updated meta_title"
       assert product.name == "some updated name"
+      assert product.options == %{}
       assert product.position == 43
       assert product.price == %{}
       assert product.sku == "some updated sku"
@@ -295,6 +300,146 @@ defmodule Bside.CatalogTest do
     test "change_product/1 returns a product changeset" do
       product = product_fixture()
       assert %Ecto.Changeset{} = Catalog.change_product(product)
+    end
+  end
+
+  describe "variants" do
+    alias Bside.Catalog.Variant
+
+    @valid_attrs %{
+      attributes: %{},
+      barcode: "some barcode",
+      cost_price: %{},
+      depth: %{},
+      description: "some description",
+      discontinue_on: "2010-04-17T14:00:00Z",
+      height: %{},
+      is_visible: true,
+      media: %{},
+      name: "some name",
+      options: %{},
+      position: 42,
+      price: %{},
+      sku: "some sku",
+      weight: %{},
+      width: %{}
+    }
+    @update_attrs %{
+      attributes: %{},
+      barcode: "some updated barcode",
+      cost_price: %{},
+      depth: %{},
+      description: "some updated description",
+      discontinue_on: "2011-05-18T15:01:01Z",
+      height: %{},
+      is_visible: false,
+      media: %{},
+      name: "some updated name",
+      options: %{},
+      position: 43,
+      price: %{},
+      sku: "some updated sku",
+      weight: %{},
+      width: %{}
+    }
+    @invalid_attrs %{
+      attributes: nil,
+      barcode: nil,
+      cost_price: nil,
+      depth: nil,
+      description: nil,
+      discontinue_on: nil,
+      height: nil,
+      is_visible: nil,
+      media: nil,
+      name: nil,
+      options: nil,
+      position: nil,
+      price: nil,
+      sku: nil,
+      weight: nil,
+      width: nil
+    }
+
+    def variant_fixture(attrs \\ %{}) do
+      {:ok, variant} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Catalog.create_variant()
+
+      variant
+    end
+
+    test "list_variants/0 returns all variants" do
+      variant = variant_fixture()
+      assert Catalog.list_variants() == [variant]
+    end
+
+    test "get_variant!/1 returns the variant with given id" do
+      variant = variant_fixture()
+      assert Catalog.get_variant!(variant.id) == variant
+    end
+
+    test "create_variant/1 with valid data creates a variant" do
+      assert {:ok, %Variant{} = variant} = Catalog.create_variant(@valid_attrs)
+      assert variant.attributes == %{}
+      assert variant.barcode == "some barcode"
+      assert variant.cost_price == %{}
+      assert variant.depth == %{}
+      assert variant.description == "some description"
+      assert variant.discontinue_on == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
+      assert variant.height == %{}
+      assert variant.is_visible == true
+      assert variant.media == %{}
+      assert variant.name == "some name"
+      assert variant.options == %{}
+      assert variant.position == 42
+      assert variant.price == %{}
+      assert variant.sku == "some sku"
+      assert variant.weight == %{}
+      assert variant.width == %{}
+    end
+
+    test "create_variant/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Catalog.create_variant(@invalid_attrs)
+    end
+
+    test "update_variant/2 with valid data updates the variant" do
+      variant = variant_fixture()
+      assert {:ok, %Variant{} = variant} = Catalog.update_variant(variant, @update_attrs)
+      assert variant.attributes == %{}
+      assert variant.barcode == "some updated barcode"
+      assert variant.cost_price == %{}
+      assert variant.depth == %{}
+      assert variant.description == "some updated description"
+      assert variant.discontinue_on == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
+      assert variant.height == %{}
+      assert variant.is_visible == false
+      assert variant.media == %{}
+      assert variant.name == "some updated name"
+      assert variant.options == %{}
+      assert variant.position == 43
+      assert variant.price == %{}
+      assert variant.sku == "some updated sku"
+      assert variant.weight == %{}
+      assert variant.width == %{}
+    end
+
+    test "update_variant/2 with invalid data returns error changeset" do
+      variant = variant_fixture()
+      assert {:error, %Ecto.Changeset{}} = Catalog.update_variant(variant, @invalid_attrs)
+      assert variant == Catalog.get_variant!(variant.id)
+    end
+
+    test "delete_variant/1 deletes the variant" do
+      variant = variant_fixture()
+      assert {:ok, %Variant{}} = Catalog.delete_variant(variant)
+      assert_raise Ecto.NoResultsError, fn -> Catalog.get_variant!(variant.id) end
+    end
+
+    test "change_variant/1 returns a variant changeset" do
+      variant = variant_fixture()
+      assert %Ecto.Changeset{} = Catalog.change_variant(variant)
     end
   end
 end

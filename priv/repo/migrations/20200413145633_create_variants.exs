@@ -1,14 +1,10 @@
-defmodule Bside.Repo.Migrations.CreateProducts do
+defmodule Bside.Repo.Migrations.CreateVariants do
   use Ecto.Migration
 
   def change do
-    create table(:products) do
+    create table(:variants) do
       add :name, :string
       add :description, :string
-      add :meta_title, :string
-      add :meta_keywords, :string
-      add :meta_description, :string
-      add :slug, :string
       add :media, :map
       add :sku, :string
       add :barcode, :string
@@ -20,9 +16,7 @@ defmodule Bside.Repo.Migrations.CreateProducts do
       add :cost_price, :map
       add :attributes, :map
       add :options, :map
-      add :is_taxable, :boolean, default: false, null: false
       add :is_visible, :boolean, default: false, null: false
-      add :is_physical, :boolean, default: false, null: false
       add :discontinue_on, :utc_datetime
       add :position, :integer
 

@@ -18,6 +18,7 @@ defmodule BsideWeb.Router do
 
     resources "/categories", CategoryController, except: [:new, :edit]
     resources "/products", ProductController, except: [:new, :edit]
+    resources "/variants", VariantController, except: [:new, :edit]
   end
 
   scope "/graphql" do

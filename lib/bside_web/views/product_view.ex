@@ -32,6 +32,7 @@ defmodule BsideWeb.ProductView do
       is_taxable: product.is_taxable,
       is_visible: product.is_visible,
       is_physical: product.is_physical,
+      options: product.options,
       discontinue_on: product.discontinue_on,
       position: product.position
     }

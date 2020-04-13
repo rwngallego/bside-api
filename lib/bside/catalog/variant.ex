@@ -1,12 +1,11 @@
-defmodule Bside.Catalog.Product do
+defmodule Bside.Catalog.Variant do
   @moduledoc """
-  Product that belongs to one or many categories and has zero or many variants
+  A variant is a product type with options that differ
   """
-
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "products" do
+  schema "variants" do
     field :attributes, :map
     field :barcode, :string
     field :cost_price, :map
@@ -14,19 +13,13 @@ defmodule Bside.Catalog.Product do
     field :description, :string
     field :discontinue_on, :utc_datetime
     field :height, :map
-    field :is_physical, :boolean, default: false
-    field :is_taxable, :boolean, default: false
     field :is_visible, :boolean, default: false
     field :media, :map
-    field :meta_description, :string
-    field :meta_keywords, :string
-    field :meta_title, :string
     field :name, :string
     field :options, :map
     field :position, :integer
     field :price, :map
     field :sku, :string
-    field :slug, :string
     field :weight, :map
     field :width, :map
 
@@ -34,15 +27,11 @@ defmodule Bside.Catalog.Product do
   end
 
   @doc false
-  def changeset(product, attrs) do
-    product
+  def changeset(variant, attrs) do
+    variant
     |> cast(attrs, [
       :name,
       :description,
-      :meta_title,
-      :meta_keywords,
-      :meta_description,
-      :slug,
       :media,
       :sku,
       :barcode,
@@ -53,20 +42,14 @@ defmodule Bside.Catalog.Product do
       :price,
       :cost_price,
       :attributes,
-      :is_taxable,
-      :is_visible,
-      :is_physical,
       :options,
+      :is_visible,
       :discontinue_on,
       :position
     ])
     |> validate_required([
       :name,
       :description,
-      :meta_title,
-      :meta_keywords,
-      :meta_description,
-      :slug,
       :media,
       :sku,
       :barcode,
@@ -77,10 +60,8 @@ defmodule Bside.Catalog.Product do
       :price,
       :cost_price,
       :attributes,
-      :is_taxable,
-      :is_visible,
-      :is_physical,
       :options,
+      :is_visible,
       :discontinue_on,
       :position
     ])

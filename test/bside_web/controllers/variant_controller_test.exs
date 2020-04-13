@@ -1,8 +1,8 @@
-defmodule BsideWeb.ProductControllerTest do
+defmodule BsideWeb.VariantControllerTest do
   use BsideWeb.ConnCase
 
   alias Bside.Catalog
-  alias Bside.Catalog.Product
+  alias Bside.Catalog.Variant
 
   @create_attrs %{
     attributes: %{},
@@ -12,19 +12,13 @@ defmodule BsideWeb.ProductControllerTest do
     description: "some description",
     discontinue_on: "2010-04-17T14:00:00Z",
     height: %{},
-    is_physical: true,
-    is_taxable: true,
     is_visible: true,
     media: %{},
-    meta_description: "some meta_description",
-    meta_keywords: "some meta_keywords",
-    meta_title: "some meta_title",
     name: "some name",
     options: %{},
     position: 42,
     price: %{},
     sku: "some sku",
-    slug: "some slug",
     weight: %{},
     width: %{}
   }
@@ -36,19 +30,13 @@ defmodule BsideWeb.ProductControllerTest do
     description: "some updated description",
     discontinue_on: "2011-05-18T15:01:01Z",
     height: %{},
-    is_physical: false,
-    is_taxable: false,
     is_visible: false,
     media: %{},
-    meta_description: "some updated meta_description",
-    meta_keywords: "some updated meta_keywords",
-    meta_title: "some updated meta_title",
     name: "some updated name",
     options: %{},
     position: 43,
     price: %{},
     sku: "some updated sku",
-    slug: "some updated slug",
     weight: %{},
     width: %{}
   }
@@ -60,26 +48,20 @@ defmodule BsideWeb.ProductControllerTest do
     description: nil,
     discontinue_on: nil,
     height: nil,
-    is_physical: nil,
-    is_taxable: nil,
     is_visible: nil,
     media: nil,
-    meta_description: nil,
-    meta_keywords: nil,
-    meta_title: nil,
-    options: %{},
     name: nil,
+    options: nil,
     position: nil,
     price: nil,
     sku: nil,
-    slug: nil,
     weight: nil,
     width: nil
   }
 
-  def fixture(:product) do
-    {:ok, product} = Catalog.create_product(@create_attrs)
-    product
+  def fixture(:variant) do
+    {:ok, variant} = Catalog.create_variant(@create_attrs)
+    variant
   end
 
   setup %{conn: conn} do
@@ -87,18 +69,18 @@ defmodule BsideWeb.ProductControllerTest do
   end
 
   describe "index" do
-    test "lists all products", %{conn: conn} do
-      conn = get(conn, Routes.product_path(conn, :index))
+    test "lists all variants", %{conn: conn} do
+      conn = get(conn, Routes.variant_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
     end
   end
 
-  describe "create product" do
-    test "renders product when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.product_path(conn, :create), product: @create_attrs)
+  describe "create variant" do
+    test "renders variant when data is valid", %{conn: conn} do
+      conn = post(conn, Routes.variant_path(conn, :create), variant: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.product_path(conn, :show, id))
+      conn = get(conn, Routes.variant_path(conn, :show, id))
 
       assert %{
                "id" => id,
@@ -109,38 +91,32 @@ defmodule BsideWeb.ProductControllerTest do
                "description" => "some description",
                "discontinue_on" => "2010-04-17T14:00:00Z",
                "height" => %{},
-               "is_physical" => true,
-               "is_taxable" => true,
                "is_visible" => true,
                "media" => %{},
-               "meta_description" => "some meta_description",
-               "meta_keywords" => "some meta_keywords",
-               "meta_title" => "some meta_title",
                "name" => "some name",
                "options" => %{},
                "position" => 42,
                "price" => %{},
                "sku" => "some sku",
-               "slug" => "some slug",
                "weight" => %{},
                "width" => %{}
              } = json_response(conn, 200)["data"]
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.product_path(conn, :create), product: @invalid_attrs)
+      conn = post(conn, Routes.variant_path(conn, :create), variant: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
 
-  describe "update product" do
-    setup [:create_product]
+  describe "update variant" do
+    setup [:create_variant]
 
-    test "renders product when data is valid", %{conn: conn, product: %Product{id: id} = product} do
-      conn = put(conn, Routes.product_path(conn, :update, product), product: @update_attrs)
+    test "renders variant when data is valid", %{conn: conn, variant: %Variant{id: id} = variant} do
+      conn = put(conn, Routes.variant_path(conn, :update, variant), variant: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.product_path(conn, :show, id))
+      conn = get(conn, Routes.variant_path(conn, :show, id))
 
       assert %{
                "id" => id,
@@ -151,45 +127,39 @@ defmodule BsideWeb.ProductControllerTest do
                "description" => "some updated description",
                "discontinue_on" => "2011-05-18T15:01:01Z",
                "height" => %{},
-               "is_physical" => false,
-               "is_taxable" => false,
                "is_visible" => false,
                "media" => %{},
-               "meta_description" => "some updated meta_description",
-               "meta_keywords" => "some updated meta_keywords",
-               "meta_title" => "some updated meta_title",
                "name" => "some updated name",
                "options" => %{},
                "position" => 43,
                "price" => %{},
                "sku" => "some updated sku",
-               "slug" => "some updated slug",
                "weight" => %{},
                "width" => %{}
              } = json_response(conn, 200)["data"]
     end
 
-    test "renders errors when data is invalid", %{conn: conn, product: product} do
-      conn = put(conn, Routes.product_path(conn, :update, product), product: @invalid_attrs)
+    test "renders errors when data is invalid", %{conn: conn, variant: variant} do
+      conn = put(conn, Routes.variant_path(conn, :update, variant), variant: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
 
-  describe "delete product" do
-    setup [:create_product]
+  describe "delete variant" do
+    setup [:create_variant]
 
-    test "deletes chosen product", %{conn: conn, product: product} do
-      conn = delete(conn, Routes.product_path(conn, :delete, product))
+    test "deletes chosen variant", %{conn: conn, variant: variant} do
+      conn = delete(conn, Routes.variant_path(conn, :delete, variant))
       assert response(conn, 204)
 
       assert_error_sent 404, fn ->
-        get(conn, Routes.product_path(conn, :show, product))
+        get(conn, Routes.variant_path(conn, :show, variant))
       end
     end
   end
 
-  defp create_product(_) do
-    product = fixture(:product)
-    {:ok, product: product}
+  defp create_variant(_) do
+    variant = fixture(:variant)
+    {:ok, variant: variant}
   end
 end
