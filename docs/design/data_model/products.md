@@ -135,4 +135,4 @@ The manufacturer/brand of the product.
 table: vendor
 
 - name: string
-- image: map
+- media: map

@@ -442,4 +442,65 @@ defmodule Bside.CatalogTest do
       assert %Ecto.Changeset{} = Catalog.change_variant(variant)
     end
   end
+
+  describe "vendors" do
+    alias Bside.Catalog.Vendor
+
+    @valid_attrs %{media: %{}, name: "some name"}
+    @update_attrs %{media: %{}, name: "some updated name"}
+    @invalid_attrs %{media: nil, name: nil}
+
+    def vendor_fixture(attrs \\ %{}) do
+      {:ok, vendor} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Catalog.create_vendor()
+
+      vendor
+    end
+
+    test "list_vendors/0 returns all vendors" do
+      vendor = vendor_fixture()
+      assert Catalog.list_vendors() == [vendor]
+    end
+
+    test "get_vendor!/1 returns the vendor with given id" do
+      vendor = vendor_fixture()
+      assert Catalog.get_vendor!(vendor.id) == vendor
+    end
+
+    test "create_vendor/1 with valid data creates a vendor" do
+      assert {:ok, %Vendor{} = vendor} = Catalog.create_vendor(@valid_attrs)
+      assert vendor.media == %{}
+      assert vendor.name == "some name"
+    end
+
+    test "create_vendor/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Catalog.create_vendor(@invalid_attrs)
+    end
+
+    test "update_vendor/2 with valid data updates the vendor" do
+      vendor = vendor_fixture()
+      assert {:ok, %Vendor{} = vendor} = Catalog.update_vendor(vendor, @update_attrs)
+      assert vendor.media == %{}
+      assert vendor.name == "some updated name"
+    end
+
+    test "update_vendor/2 with invalid data returns error changeset" do
+      vendor = vendor_fixture()
+      assert {:error, %Ecto.Changeset{}} = Catalog.update_vendor(vendor, @invalid_attrs)
+      assert vendor == Catalog.get_vendor!(vendor.id)
+    end
+
+    test "delete_vendor/1 deletes the vendor" do
+      vendor = vendor_fixture()
+      assert {:ok, %Vendor{}} = Catalog.delete_vendor(vendor)
+      assert_raise Ecto.NoResultsError, fn -> Catalog.get_vendor!(vendor.id) end
+    end
+
+    test "change_vendor/1 returns a vendor changeset" do
+      vendor = vendor_fixture()
+      assert %Ecto.Changeset{} = Catalog.change_vendor(vendor)
+    end
+  end
 end
