@@ -1,6 +1,6 @@
 defmodule Bside.Catalog.Category do
   @moduledoc """
-  Category
+  A category is a collection of products.
   """
 
   use Ecto.Schema

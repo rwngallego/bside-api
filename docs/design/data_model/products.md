@@ -63,21 +63,21 @@ table: products
 - meta_keywords: string
 - meta_description: string
 - slug: string
-- media: json
+- media: map
 - sku: string
 - barcode: string
-- weight: json
-- height: json
-- width: json
-- depth: json
-- cost_price: json
-- price: json
-- attributes: json
-- position: integer
-- taxable: bool
+- weight: map
+- height: map
+- width: map
+- depth: map
+- price: map
+- cost_price: map
+- attributes: map
+- is_taxable: bool
 - is_visible: bool
 - is_physical: bool
 - discontinue_on: utc_datetime
+- position: integer
 
 ### Methods:
 
@@ -134,4 +134,4 @@ The manufacturer/brand of the product.
 table: vendor
 
 - name: string
-- image: json
+- image: map

@@ -17,6 +17,7 @@ defmodule BsideWeb.Router do
     pipe_through :api
 
     resources "/categories", CategoryController, except: [:new, :edit]
+    resources "/products", ProductController, except: [:new, :edit]
   end
 
   scope "/graphql" do

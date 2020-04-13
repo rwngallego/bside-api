@@ -132,4 +132,169 @@ defmodule Bside.CatalogTest do
       assert %Ecto.Changeset{} = Catalog.change_category(category)
     end
   end
+
+  describe "products" do
+    alias Bside.Catalog.Product
+
+    @valid_attrs %{
+      attributes: %{},
+      barcode: "some barcode",
+      cost_price: %{},
+      depth: %{},
+      description: "some description",
+      discontinue_on: "2010-04-17T14:00:00Z",
+      height: %{},
+      is_physical: true,
+      is_taxable: true,
+      is_visible: true,
+      media: %{},
+      meta_description: "some meta_description",
+      meta_keywords: "some meta_keywords",
+      meta_title: "some meta_title",
+      name: "some name",
+      position: 42,
+      price: %{},
+      sku: "some sku",
+      slug: "some slug",
+      weight: %{},
+      width: %{}
+    }
+    @update_attrs %{
+      attributes: %{},
+      barcode: "some updated barcode",
+      cost_price: %{},
+      depth: %{},
+      description: "some updated description",
+      discontinue_on: "2011-05-18T15:01:01Z",
+      height: %{},
+      is_physical: false,
+      is_taxable: false,
+      is_visible: false,
+      media: %{},
+      meta_description: "some updated meta_description",
+      meta_keywords: "some updated meta_keywords",
+      meta_title: "some updated meta_title",
+      name: "some updated name",
+      position: 43,
+      price: %{},
+      sku: "some updated sku",
+      slug: "some updated slug",
+      weight: %{},
+      width: %{}
+    }
+    @invalid_attrs %{
+      attributes: nil,
+      barcode: nil,
+      cost_price: nil,
+      depth: nil,
+      description: nil,
+      discontinue_on: nil,
+      height: nil,
+      is_physical: nil,
+      is_taxable: nil,
+      is_visible: nil,
+      media: nil,
+      meta_description: nil,
+      meta_keywords: nil,
+      meta_title: nil,
+      name: nil,
+      position: nil,
+      price: nil,
+      sku: nil,
+      slug: nil,
+      weight: nil,
+      width: nil
+    }
+
+    def product_fixture(attrs \\ %{}) do
+      {:ok, product} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Catalog.create_product()
+
+      product
+    end
+
+    test "list_products/0 returns all products" do
+      product = product_fixture()
+      assert Catalog.list_products() == [product]
+    end
+
+    test "get_product!/1 returns the product with given id" do
+      product = product_fixture()
+      assert Catalog.get_product!(product.id) == product
+    end
+
+    test "create_product/1 with valid data creates a product" do
+      assert {:ok, %Product{} = product} = Catalog.create_product(@valid_attrs)
+      assert product.attributes == %{}
+      assert product.barcode == "some barcode"
+      assert product.cost_price == %{}
+      assert product.depth == %{}
+      assert product.description == "some description"
+      assert product.discontinue_on == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
+      assert product.height == %{}
+      assert product.is_physical == true
+      assert product.is_taxable == true
+      assert product.is_visible == true
+      assert product.media == %{}
+      assert product.meta_description == "some meta_description"
+      assert product.meta_keywords == "some meta_keywords"
+      assert product.meta_title == "some meta_title"
+      assert product.name == "some name"
+      assert product.position == 42
+      assert product.price == %{}
+      assert product.sku == "some sku"
+      assert product.slug == "some slug"
+      assert product.weight == %{}
+      assert product.width == %{}
+    end
+
+    test "create_product/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Catalog.create_product(@invalid_attrs)
+    end
+
+    test "update_product/2 with valid data updates the product" do
+      product = product_fixture()
+      assert {:ok, %Product{} = product} = Catalog.update_product(product, @update_attrs)
+      assert product.attributes == %{}
+      assert product.barcode == "some updated barcode"
+      assert product.cost_price == %{}
+      assert product.depth == %{}
+      assert product.description == "some updated description"
+      assert product.discontinue_on == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
+      assert product.height == %{}
+      assert product.is_physical == false
+      assert product.is_taxable == false
+      assert product.is_visible == false
+      assert product.media == %{}
+      assert product.meta_description == "some updated meta_description"
+      assert product.meta_keywords == "some updated meta_keywords"
+      assert product.meta_title == "some updated meta_title"
+      assert product.name == "some updated name"
+      assert product.position == 43
+      assert product.price == %{}
+      assert product.sku == "some updated sku"
+      assert product.slug == "some updated slug"
+      assert product.weight == %{}
+      assert product.width == %{}
+    end
+
+    test "update_product/2 with invalid data returns error changeset" do
+      product = product_fixture()
+      assert {:error, %Ecto.Changeset{}} = Catalog.update_product(product, @invalid_attrs)
+      assert product == Catalog.get_product!(product.id)
+    end
+
+    test "delete_product/1 deletes the product" do
+      product = product_fixture()
+      assert {:ok, %Product{}} = Catalog.delete_product(product)
+      assert_raise Ecto.NoResultsError, fn -> Catalog.get_product!(product.id) end
+    end
+
+    test "change_product/1 returns a product changeset" do
+      product = product_fixture()
+      assert %Ecto.Changeset{} = Catalog.change_product(product)
+    end
+  end
 end
