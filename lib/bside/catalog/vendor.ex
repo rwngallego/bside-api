@@ -6,9 +6,13 @@ defmodule Bside.Catalog.Vendor do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Bside.Catalog
+
   schema "vendors" do
     field :media, :map
     field :name, :string
+
+    has_many(:products, Catalog.Product)
 
     timestamps()
   end

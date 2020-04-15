@@ -26,7 +26,11 @@ defmodule Bside.Repo.Migrations.CreateProducts do
       add :discontinue_on, :utc_datetime
       add :position, :integer
 
+      add :vendor_id, references(:vendors, on_delete: :nothing), null: false
+
       timestamps()
     end
+
+    create index(:products, [:vendor_id])
   end
 end

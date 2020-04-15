@@ -4,6 +4,8 @@ defmodule BsideWeb.ProductControllerTest do
   alias Bside.Catalog
   alias Bside.Catalog.Product
 
+  import Bside.CatalogFactory
+
   @create_attrs %{
     attributes: %{},
     barcode: "some barcode",
@@ -78,7 +80,9 @@ defmodule BsideWeb.ProductControllerTest do
   }
 
   def fixture(:product) do
-    {:ok, product} = Catalog.create_product(@create_attrs)
+    vendor = insert(:vendor)
+    attrs = Map.put(@create_attrs, :vendor_id, vendor.id)
+    {:ok, product} = Catalog.create_product(attrs)
     product
   end
 
@@ -95,7 +99,9 @@ defmodule BsideWeb.ProductControllerTest do
 
   describe "create product" do
     test "renders product when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.product_path(conn, :create), product: @create_attrs)
+      vendor = insert(:vendor)
+      create_attrs = Map.put(@create_attrs, :vendor_id, vendor.id)
+      conn = post(conn, Routes.product_path(conn, :create), product: create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, Routes.product_path(conn, :show, id))

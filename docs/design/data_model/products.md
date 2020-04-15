@@ -20,7 +20,9 @@ Example:
       - description: Form fitted shirt with pearl buttons and stripes at front.
       - parent_id: 100
       - id: 101
-      - price: 370 SEK
+      - price:
+        - value: 370, currency: SEK
+        - value: 33, currency: EUR
       - sku: 210001
       - media:
         - {img_1}

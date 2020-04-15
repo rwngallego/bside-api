@@ -5,6 +5,8 @@ defmodule Bside.Catalog.Product do
 
   use Ecto.Schema
   import Ecto.Changeset
+  
+  alias Bside.Catalog
 
   schema "products" do
     field :attributes, :map
@@ -29,6 +31,10 @@ defmodule Bside.Catalog.Product do
     field :slug, :string
     field :weight, :map
     field :width, :map
+
+    has_many(:variants, Catalog.Variant)
+
+    belongs_to(:vendor, Catalog.Vendor)
 
     timestamps()
   end
@@ -58,7 +64,8 @@ defmodule Bside.Catalog.Product do
       :is_physical,
       :options,
       :discontinue_on,
-      :position
+      :position,
+      :vendor_id
     ])
     |> validate_required([
       :name,
@@ -82,7 +89,8 @@ defmodule Bside.Catalog.Product do
       :is_physical,
       :options,
       :discontinue_on,
-      :position
+      :position,
+      :vendor_id
     ])
   end
 end

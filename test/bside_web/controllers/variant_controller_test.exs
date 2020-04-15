@@ -4,6 +4,8 @@ defmodule BsideWeb.VariantControllerTest do
   alias Bside.Catalog
   alias Bside.Catalog.Variant
 
+  import Bside.CatalogFactory
+
   @create_attrs %{
     attributes: %{},
     barcode: "some barcode",
@@ -60,7 +62,9 @@ defmodule BsideWeb.VariantControllerTest do
   }
 
   def fixture(:variant) do
-    {:ok, variant} = Catalog.create_variant(@create_attrs)
+    product = insert(:product)
+    attrs = Map.put(@create_attrs, :product_id, product.id)
+    {:ok, variant} = Catalog.create_variant(attrs)
     variant
   end
 
@@ -77,7 +81,9 @@ defmodule BsideWeb.VariantControllerTest do
 
   describe "create variant" do
     test "renders variant when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.variant_path(conn, :create), variant: @create_attrs)
+      product = insert(:product)
+      create_attrs = Map.put(@create_attrs, :product_id, product.id)
+      conn = post(conn, Routes.variant_path(conn, :create), variant: create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, Routes.variant_path(conn, :show, id))

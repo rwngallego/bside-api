@@ -136,6 +136,8 @@ defmodule Bside.CatalogTest do
   describe "products" do
     alias Bside.Catalog.Product
 
+    import Bside.CatalogFactory
+
     @valid_attrs %{
       attributes: %{},
       barcode: "some barcode",
@@ -210,6 +212,9 @@ defmodule Bside.CatalogTest do
     }
 
     def product_fixture(attrs \\ %{}) do
+      vendor = insert(:vendor)
+      attrs = Map.put(attrs, :vendor_id, vendor.id)
+
       {:ok, product} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -229,7 +234,9 @@ defmodule Bside.CatalogTest do
     end
 
     test "create_product/1 with valid data creates a product" do
-      assert {:ok, %Product{} = product} = Catalog.create_product(@valid_attrs)
+      vendor = insert(:vendor)
+      valid_attrs = Map.put(@valid_attrs, :vendor_id, vendor.id)
+      assert {:ok, %Product{} = product} = Catalog.create_product(valid_attrs)
       assert product.attributes == %{}
       assert product.barcode == "some barcode"
       assert product.cost_price == %{}
@@ -304,6 +311,8 @@ defmodule Bside.CatalogTest do
   end
 
   describe "variants" do
+    import Bside.CatalogFactory
+
     alias Bside.Catalog.Variant
 
     @valid_attrs %{
@@ -362,6 +371,9 @@ defmodule Bside.CatalogTest do
     }
 
     def variant_fixture(attrs \\ %{}) do
+      product = insert(:product)
+      attrs = Map.put(attrs, :product_id, product.id)
+
       {:ok, variant} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -381,7 +393,9 @@ defmodule Bside.CatalogTest do
     end
 
     test "create_variant/1 with valid data creates a variant" do
-      assert {:ok, %Variant{} = variant} = Catalog.create_variant(@valid_attrs)
+      product = insert(:product)
+      valid_attrs = Map.put(@valid_attrs, :product_id, product.id)
+      assert {:ok, %Variant{} = variant} = Catalog.create_variant(valid_attrs)
       assert variant.attributes == %{}
       assert variant.barcode == "some barcode"
       assert variant.cost_price == %{}

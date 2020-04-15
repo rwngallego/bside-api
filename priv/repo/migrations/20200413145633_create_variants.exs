@@ -20,7 +20,11 @@ defmodule Bside.Repo.Migrations.CreateVariants do
       add :discontinue_on, :utc_datetime
       add :position, :integer
 
+      add :product_id, references(:products, on_delete: :nothing), null: false
+
       timestamps()
     end
+
+    create index(:variants, [:product_id])
   end
 end

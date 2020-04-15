@@ -5,6 +5,8 @@ defmodule Bside.Catalog.Variant do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Bside.Catalog
+
   schema "variants" do
     field :attributes, :map
     field :barcode, :string
@@ -22,6 +24,8 @@ defmodule Bside.Catalog.Variant do
     field :sku, :string
     field :weight, :map
     field :width, :map
+
+    belongs_to(:product, Catalog.Product)
 
     timestamps()
   end
@@ -45,7 +49,8 @@ defmodule Bside.Catalog.Variant do
       :options,
       :is_visible,
       :discontinue_on,
-      :position
+      :position,
+      :product_id
     ])
     |> validate_required([
       :name,
@@ -63,7 +68,8 @@ defmodule Bside.Catalog.Variant do
       :options,
       :is_visible,
       :discontinue_on,
-      :position
+      :position,
+      :product_id
     ])
   end
 end
