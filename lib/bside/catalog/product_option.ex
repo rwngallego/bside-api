@@ -5,10 +5,13 @@ defmodule Bside.Catalog.ProductOption do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Bside.Catalog
+
   schema "product_options" do
     field :description, :string
     field :name, :string
-    field :options, :map
+
+    embeds_many :options, Catalog.Embedded.ProductOptionItemProp
 
     timestamps()
   end
@@ -16,7 +19,8 @@ defmodule Bside.Catalog.ProductOption do
   @doc false
   def changeset(product_option, attrs) do
     product_option
-    |> cast(attrs, [:name, :description, :options])
+    |> cast(attrs, [:name, :description])
+    |> cast_embed(:options)
     |> validate_required([:name, :description, :options])
   end
 end

@@ -139,9 +139,9 @@ defmodule Bside.CatalogTest do
     import Bside.CatalogFactory
 
     @valid_attrs %{
-      attributes: %{},
+      attributes: [],
       barcode: "some barcode",
-      cost_price: %{},
+      cost_prices: [],
       depth: %{},
       description: "some description",
       discontinue_on: "2010-04-17T14:00:00Z",
@@ -149,23 +149,23 @@ defmodule Bside.CatalogTest do
       is_physical: true,
       is_taxable: true,
       is_visible: true,
-      media: %{},
+      medias: [],
       meta_description: "some meta_description",
       meta_keywords: "some meta_keywords",
       meta_title: "some meta_title",
       name: "some name",
-      options: %{},
+      options: [],
       position: 42,
-      price: %{},
+      prices: [],
       sku: "some sku",
       slug: "some slug",
       weight: %{},
       width: %{}
     }
     @update_attrs %{
-      attributes: %{},
+      attributes: [],
       barcode: "some updated barcode",
-      cost_price: %{},
+      cost_prices: [],
       depth: %{},
       description: "some updated description",
       discontinue_on: "2011-05-18T15:01:01Z",
@@ -173,14 +173,14 @@ defmodule Bside.CatalogTest do
       is_physical: false,
       is_taxable: false,
       is_visible: false,
-      media: %{},
+      medias: [],
       meta_description: "some updated meta_description",
       meta_keywords: "some updated meta_keywords",
       meta_title: "some updated meta_title",
       name: "some updated name",
-      options: %{},
+      options: [],
       position: 43,
-      price: %{},
+      prices: [],
       sku: "some updated sku",
       slug: "some updated slug",
       weight: %{},
@@ -189,7 +189,7 @@ defmodule Bside.CatalogTest do
     @invalid_attrs %{
       attributes: nil,
       barcode: nil,
-      cost_price: nil,
+      cost_prices: nil,
       depth: nil,
       description: nil,
       discontinue_on: nil,
@@ -197,14 +197,14 @@ defmodule Bside.CatalogTest do
       is_physical: nil,
       is_taxable: nil,
       is_visible: nil,
-      media: nil,
+      medias: nil,
       meta_description: nil,
       meta_keywords: nil,
       meta_title: nil,
       name: nil,
       options: nil,
       position: nil,
-      price: nil,
+      prices: nil,
       sku: nil,
       slug: nil,
       weight: nil,
@@ -237,9 +237,9 @@ defmodule Bside.CatalogTest do
       vendor = insert(:vendor)
       valid_attrs = Map.put(@valid_attrs, :vendor_id, vendor.id)
       assert {:ok, %Product{} = product} = Catalog.create_product(valid_attrs)
-      assert product.attributes == %{}
+      assert product.attributes == []
       assert product.barcode == "some barcode"
-      assert product.cost_price == %{}
+      assert product.cost_prices == []
       assert product.depth == %{}
       assert product.description == "some description"
       assert product.discontinue_on == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
@@ -247,14 +247,14 @@ defmodule Bside.CatalogTest do
       assert product.is_physical == true
       assert product.is_taxable == true
       assert product.is_visible == true
-      assert product.media == %{}
+      assert product.medias == []
       assert product.meta_description == "some meta_description"
       assert product.meta_keywords == "some meta_keywords"
       assert product.meta_title == "some meta_title"
       assert product.name == "some name"
-      assert product.options == %{}
+      assert product.options == []
       assert product.position == 42
-      assert product.price == %{}
+      assert product.prices == []
       assert product.sku == "some sku"
       assert product.slug == "some slug"
       assert product.weight == %{}
@@ -268,9 +268,9 @@ defmodule Bside.CatalogTest do
     test "update_product/2 with valid data updates the product" do
       product = product_fixture()
       assert {:ok, %Product{} = product} = Catalog.update_product(product, @update_attrs)
-      assert product.attributes == %{}
+      assert product.attributes == []
       assert product.barcode == "some updated barcode"
-      assert product.cost_price == %{}
+      assert product.cost_prices == []
       assert product.depth == %{}
       assert product.description == "some updated description"
       assert product.discontinue_on == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
@@ -278,14 +278,14 @@ defmodule Bside.CatalogTest do
       assert product.is_physical == false
       assert product.is_taxable == false
       assert product.is_visible == false
-      assert product.media == %{}
+      assert product.medias == []
       assert product.meta_description == "some updated meta_description"
       assert product.meta_keywords == "some updated meta_keywords"
       assert product.meta_title == "some updated meta_title"
       assert product.name == "some updated name"
-      assert product.options == %{}
+      assert product.options == []
       assert product.position == 43
-      assert product.price == %{}
+      assert product.prices == []
       assert product.sku == "some updated sku"
       assert product.slug == "some updated slug"
       assert product.weight == %{}
@@ -316,37 +316,37 @@ defmodule Bside.CatalogTest do
     alias Bside.Catalog.Variant
 
     @valid_attrs %{
-      attributes: %{},
+      attributes: [],
       barcode: "some barcode",
-      cost_price: %{},
+      cost_prices: [],
       depth: %{},
       description: "some description",
       discontinue_on: "2010-04-17T14:00:00Z",
       height: %{},
       is_visible: true,
-      media: %{},
+      medias: [],
       name: "some name",
-      options: %{},
+      options: [],
       position: 42,
-      price: %{},
+      prices: [],
       sku: "some sku",
       weight: %{},
       width: %{}
     }
     @update_attrs %{
-      attributes: %{},
+      attributes: [],
       barcode: "some updated barcode",
-      cost_price: %{},
+      cost_prices: [],
       depth: %{},
       description: "some updated description",
       discontinue_on: "2011-05-18T15:01:01Z",
       height: %{},
       is_visible: false,
-      media: %{},
+      medias: [],
       name: "some updated name",
-      options: %{},
+      options: [],
       position: 43,
-      price: %{},
+      prices: [],
       sku: "some updated sku",
       weight: %{},
       width: %{}
@@ -354,17 +354,17 @@ defmodule Bside.CatalogTest do
     @invalid_attrs %{
       attributes: nil,
       barcode: nil,
-      cost_price: nil,
+      cost_prices: nil,
       depth: nil,
       description: nil,
       discontinue_on: nil,
       height: nil,
       is_visible: nil,
-      media: nil,
+      medias: nil,
       name: nil,
       options: nil,
       position: nil,
-      price: nil,
+      prices: nil,
       sku: nil,
       weight: nil,
       width: nil
@@ -396,19 +396,19 @@ defmodule Bside.CatalogTest do
       product = insert(:product)
       valid_attrs = Map.put(@valid_attrs, :product_id, product.id)
       assert {:ok, %Variant{} = variant} = Catalog.create_variant(valid_attrs)
-      assert variant.attributes == %{}
+      assert variant.attributes == []
       assert variant.barcode == "some barcode"
-      assert variant.cost_price == %{}
+      assert variant.cost_prices == []
       assert variant.depth == %{}
       assert variant.description == "some description"
       assert variant.discontinue_on == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
       assert variant.height == %{}
       assert variant.is_visible == true
-      assert variant.media == %{}
+      assert variant.medias == []
       assert variant.name == "some name"
-      assert variant.options == %{}
+      assert variant.options == []
       assert variant.position == 42
-      assert variant.price == %{}
+      assert variant.prices == []
       assert variant.sku == "some sku"
       assert variant.weight == %{}
       assert variant.width == %{}
@@ -421,19 +421,19 @@ defmodule Bside.CatalogTest do
     test "update_variant/2 with valid data updates the variant" do
       variant = variant_fixture()
       assert {:ok, %Variant{} = variant} = Catalog.update_variant(variant, @update_attrs)
-      assert variant.attributes == %{}
+      assert variant.attributes == []
       assert variant.barcode == "some updated barcode"
-      assert variant.cost_price == %{}
+      assert variant.cost_prices == []
       assert variant.depth == %{}
       assert variant.description == "some updated description"
       assert variant.discontinue_on == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
       assert variant.height == %{}
       assert variant.is_visible == false
-      assert variant.media == %{}
+      assert variant.medias == []
       assert variant.name == "some updated name"
-      assert variant.options == %{}
+      assert variant.options == []
       assert variant.position == 43
-      assert variant.price == %{}
+      assert variant.prices == []
       assert variant.sku == "some updated sku"
       assert variant.weight == %{}
       assert variant.width == %{}
@@ -460,9 +460,9 @@ defmodule Bside.CatalogTest do
   describe "vendors" do
     alias Bside.Catalog.Vendor
 
-    @valid_attrs %{media: %{}, name: "some name"}
-    @update_attrs %{media: %{}, name: "some updated name"}
-    @invalid_attrs %{media: nil, name: nil}
+    @valid_attrs %{medias: %{}, name: "some name"}
+    @update_attrs %{medias: %{}, name: "some updated name"}
+    @invalid_attrs %{medias: nil, name: nil}
 
     def vendor_fixture(attrs \\ %{}) do
       {:ok, vendor} =
@@ -485,7 +485,7 @@ defmodule Bside.CatalogTest do
 
     test "create_vendor/1 with valid data creates a vendor" do
       assert {:ok, %Vendor{} = vendor} = Catalog.create_vendor(@valid_attrs)
-      assert vendor.media == %{}
+      assert vendor.medias == []
       assert vendor.name == "some name"
     end
 
@@ -496,7 +496,7 @@ defmodule Bside.CatalogTest do
     test "update_vendor/2 with valid data updates the vendor" do
       vendor = vendor_fixture()
       assert {:ok, %Vendor{} = vendor} = Catalog.update_vendor(vendor, @update_attrs)
-      assert vendor.media == %{}
+      assert vendor.medias == []
       assert vendor.name == "some updated name"
     end
 
@@ -525,7 +525,7 @@ defmodule Bside.CatalogTest do
     @update_attrs %{
       description: "some updated description",
       name: "some updated name",
-      options: %{}
+      options: []
     }
     @invalid_attrs %{description: nil, name: nil, options: nil}
 
@@ -554,7 +554,7 @@ defmodule Bside.CatalogTest do
 
       assert product_option.description == "some description"
       assert product_option.name == "some name"
-      assert product_option.options == %{}
+      assert product_option.options == []
     end
 
     test "create_product_option/1 with invalid data returns error changeset" do
@@ -569,7 +569,7 @@ defmodule Bside.CatalogTest do
 
       assert product_option.description == "some updated description"
       assert product_option.name == "some updated name"
-      assert product_option.options == %{}
+      assert product_option.options == []
     end
 
     test "update_product_option/2 with invalid data returns error changeset" do

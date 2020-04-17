@@ -9,15 +9,15 @@ defmodule Bside.Repo.Migrations.CreateProducts do
       add :meta_keywords, :string
       add :meta_description, :string
       add :slug, :string
-      add :media, :map
+      add :medias, :map
       add :sku, :string
       add :barcode, :string
       add :weight, :map
       add :height, :map
       add :width, :map
       add :depth, :map
-      add :price, :map
-      add :cost_price, :map
+      add :prices, :map
+      add :cost_prices, :map
       add :attributes, :map
       add :options, :map
       add :is_taxable, :boolean, default: false, null: false
@@ -30,7 +30,5 @@ defmodule Bside.Repo.Migrations.CreateProducts do
 
       timestamps()
     end
-
-    create index(:products, [:vendor_id])
   end
 end

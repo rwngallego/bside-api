@@ -14,5 +14,6 @@ import Bside.CatalogFactory
 
 insert_list(5, :category)
 insert_list(3, :product_option)
-insert_list(3, :vendor)
+insert_list(2, :vendor)
 insert_list(2, :product)
+insert_list(2, :variant)

@@ -44,6 +44,7 @@ defmodule BsideWeb.Endpoint do
   # Cors configuration
   plug Corsica,
     origins: [
+      "http://localhost:4000",
       "http://localhost:3000",
       ~r{^http?://(.*\.?)perfecty\.co$}
     ],

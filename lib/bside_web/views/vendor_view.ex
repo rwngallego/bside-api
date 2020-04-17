@@ -11,6 +11,6 @@ defmodule BsideWeb.VendorView do
   end
 
   def render("vendor.json", %{vendor: vendor}) do
-    %{id: vendor.id, name: vendor.name, media: vendor.media}
+    %{id: vendor.id, name: vendor.name, medias: vendor.medias}
   end
 end

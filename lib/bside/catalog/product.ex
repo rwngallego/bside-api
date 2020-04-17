@@ -5,13 +5,11 @@ defmodule Bside.Catalog.Product do
 
   use Ecto.Schema
   import Ecto.Changeset
-  
+
   alias Bside.Catalog
 
   schema "products" do
-    field :attributes, :map
     field :barcode, :string
-    field :cost_price, :map
     field :depth, :map
     field :description, :string
     field :discontinue_on, :utc_datetime
@@ -19,18 +17,21 @@ defmodule Bside.Catalog.Product do
     field :is_physical, :boolean, default: false
     field :is_taxable, :boolean, default: false
     field :is_visible, :boolean, default: false
-    field :media, :map
     field :meta_description, :string
     field :meta_keywords, :string
     field :meta_title, :string
     field :name, :string
-    field :options, :map
     field :position, :integer
-    field :price, :map
     field :sku, :string
     field :slug, :string
     field :weight, :map
     field :width, :map
+
+    embeds_many :prices, Catalog.Embedded.PriceProp
+    embeds_many :cost_prices, Catalog.Embedded.PriceProp
+    embeds_many :medias, Catalog.Embedded.MediaProp
+    embeds_many :options, Catalog.Embedded.ProductOptionProp
+    embeds_many :attributes, Catalog.Embedded.AttributeProp
 
     has_many(:variants, Catalog.Variant)
 
@@ -49,48 +50,33 @@ defmodule Bside.Catalog.Product do
       :meta_keywords,
       :meta_description,
       :slug,
-      :media,
       :sku,
       :barcode,
       :weight,
       :height,
       :width,
       :depth,
-      :price,
-      :cost_price,
-      :attributes,
       :is_taxable,
       :is_visible,
       :is_physical,
-      :options,
       :discontinue_on,
       :position,
       :vendor_id
     ])
+    |> cast_embed(:prices)
+    |> cast_embed(:cost_prices)
+    |> cast_embed(:medias)
+    |> cast_embed(:options)
+    |> cast_embed(:attributes)
     |> validate_required([
       :name,
       :description,
-      :meta_title,
-      :meta_keywords,
-      :meta_description,
       :slug,
-      :media,
       :sku,
-      :barcode,
-      :weight,
-      :height,
-      :width,
-      :depth,
-      :price,
-      :cost_price,
-      :attributes,
-      :is_taxable,
-      :is_visible,
-      :is_physical,
-      :options,
-      :discontinue_on,
+      :prices,
       :position,
       :vendor_id
     ])
+    |> foreign_key_constraint(:vendor_id)
   end
 end

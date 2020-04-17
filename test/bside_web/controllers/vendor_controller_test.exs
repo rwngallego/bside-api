@@ -5,14 +5,14 @@ defmodule BsideWeb.VendorControllerTest do
   alias Bside.Catalog.Vendor
 
   @create_attrs %{
-    media: %{},
+    medias: %{},
     name: "some name"
   }
   @update_attrs %{
-    media: %{},
+    medias: %{},
     name: "some updated name"
   }
-  @invalid_attrs %{media: nil, name: nil}
+  @invalid_attrs %{medias: nil, name: nil}
 
   def fixture(:vendor) do
     {:ok, vendor} = Catalog.create_vendor(@create_attrs)
@@ -39,7 +39,7 @@ defmodule BsideWeb.VendorControllerTest do
 
       assert %{
                "id" => id,
-               "media" => %{},
+               "medias" => [],
                "name" => "some name"
              } = json_response(conn, 200)["data"]
     end
@@ -61,7 +61,7 @@ defmodule BsideWeb.VendorControllerTest do
 
       assert %{
                "id" => id,
-               "media" => %{},
+               "medias" => [],
                "name" => "some updated name"
              } = json_response(conn, 200)["data"]
     end

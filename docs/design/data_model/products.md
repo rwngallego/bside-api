@@ -10,9 +10,9 @@ Example:
 - Product: Alix Shirt
   - id: 100
   - options:
-    - size
-    - material
-    - open
+    - name: size
+    - name: material
+    - name: open
 
   - variants:
     - XS nylon open variant:
@@ -20,18 +20,18 @@ Example:
       - description: Form fitted shirt with pearl buttons and stripes at front.
       - parent_id: 100
       - id: 101
-      - price:
+      - prices:
         - value: 370, currency: SEK
         - value: 33, currency: EUR
       - sku: 210001
-      - media:
+      - medias:
         - {img_1}
         - {img_2}
         - {img_3}
       - options:
-        - size: xs
-        - material: nylon
-        - open: yes
+        - name: size, value: xs
+        - name: material, value: nylon
+        - name: open, value: yes
       - attributes:
         - att_1: val1
         - att_2: val2
@@ -43,7 +43,7 @@ Example:
       - id: 102
       - price: 330 SEK
       - sku: 210001
-      - media:
+      - medias:
         - {img_1}
         - {img_2}
       - options:
@@ -65,15 +65,15 @@ table: products
 - meta_keywords: string
 - meta_description: string
 - slug: string
-- media: map
+- medias: map
 - sku: string
 - barcode: string
 - weight: map
 - height: map
 - width: map
 - depth: map
-- price: map
-- cost_price: map
+- prices: map
+- cost_prices: map
 - attributes: map
 - is_taxable: bool
 - is_visible: bool
@@ -124,7 +124,7 @@ Example:
         - yes
         - no
 
-table: product_options
+table: product_option_definitions
 
 - name: string
 - description: string
@@ -137,4 +137,4 @@ The manufacturer/brand of the product.
 table: vendor
 
 - name: string
-- media: map
+- medias: map

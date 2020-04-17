@@ -7,12 +7,12 @@ defmodule BsideWeb.ProductOptionControllerTest do
   @create_attrs %{
     description: "some description",
     name: "some name",
-    options: %{}
+    options: []
   }
   @update_attrs %{
     description: "some updated description",
     name: "some updated name",
-    options: %{}
+    options: []
   }
   @invalid_attrs %{description: nil, name: nil, options: nil}
 
@@ -43,7 +43,7 @@ defmodule BsideWeb.ProductOptionControllerTest do
                "id" => id,
                "description" => "some description",
                "name" => "some name",
-               "options" => %{}
+               "options" => []
              } = json_response(conn, 200)["data"]
     end
 
@@ -73,7 +73,7 @@ defmodule BsideWeb.ProductOptionControllerTest do
                "id" => id,
                "description" => "some updated description",
                "name" => "some updated name",
-               "options" => %{}
+               "options" => []
              } = json_response(conn, 200)["data"]
     end
 

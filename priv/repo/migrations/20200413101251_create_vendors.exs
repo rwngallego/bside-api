@@ -4,7 +4,7 @@ defmodule Bside.Repo.Migrations.CreateVendors do
   def change do
     create table(:vendors) do
       add :name, :string
-      add :media, :map
+      add :medias, :map
 
       timestamps()
     end

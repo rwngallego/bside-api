@@ -148,6 +148,20 @@ defmodule Bside.Catalog do
   def get_product!(id), do: Repo.get!(Product, id)
 
   @doc """
+  Gets a single product.
+
+  ## Examples
+
+      iex> get_product(123)
+      %Product{}
+
+      iex> get_product!(456)
+      nil
+
+  """
+  def get_product(id), do: Repo.get(Product, id)
+
+  @doc """
   Creates a product.
 
   ## Examples

@@ -31,4 +31,31 @@ defmodule BsideWeb.CatalogResolver do
         error
     end
   end
+
+  def list_products(_root, _args, _info) do
+    products = Catalog.list_products()
+    {:ok, products}
+  end
+
+  def get_product(_root, %{id: id}, _info) do
+    case Catalog.get_product(id) do
+      nil ->
+        Log.error("Product not found", %{id: id})
+        {:error, :not_found}
+
+      product ->
+        {:ok, product}
+    end
+  end
+
+  def create_product(_root, %{product: product_args}, _info) do
+    case Catalog.create_product(product_args) do
+      {:ok, product} ->
+        {:ok, product}
+
+      error ->
+        Log.error("Error creating the product", %{error: error})
+        error
+    end
+  end
 end

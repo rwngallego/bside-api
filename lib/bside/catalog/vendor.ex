@@ -9,8 +9,9 @@ defmodule Bside.Catalog.Vendor do
   alias Bside.Catalog
 
   schema "vendors" do
-    field :media, :map
     field :name, :string
+
+    embeds_many :medias, Catalog.Embedded.MediaProp
 
     has_many(:products, Catalog.Product)
 
@@ -20,7 +21,8 @@ defmodule Bside.Catalog.Vendor do
   @doc false
   def changeset(vendor, attrs) do
     vendor
-    |> cast(attrs, [:name, :media])
-    |> validate_required([:name, :media])
+    |> cast(attrs, [:name])
+    |> cast_embed(:medias)
+    |> validate_required([:name])
   end
 end
