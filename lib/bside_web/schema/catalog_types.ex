@@ -44,19 +44,47 @@ defmodule BsideWeb.Schema.CatalogTypes do
     field :position, :integer
   end
 
-  @desc "PriceProp (virtual)"
-  object :price do
+  @desc "PriceProp"
+  object :price_prop do
     field :currency, non_null(:string)
     field :value, non_null(:integer)
+  end
+
+  @desc "MediaProp"
+  object :media_prop do
+    field :name, non_null(:string)
+    field :url, non_null(:string)
+    field :type, non_null(:string)
+  end
+
+  @desc "AttributeProp"
+  object :attribute_prop do
+    field :name, :string
+    field :value, :string
+  end
+
+  @desc "OptionValueProp"
+  object :option_value_prop do
+    field :name, :string
+    field :value, :string
+  end
+
+  @desc "OptionProp"
+  object :option_prop do
+    field :name, :string
+    field :options, non_null(list_of(:option_value_prop))
   end
 
   @desc "Products"
   object :product do
     field :id, non_null(:id)
-    field :name, non_null(:string)
+    field :attributes, list_of(:attribute_prop)
     field :description, :string
-    field :prices, list_of(:price)
-    field :cost_prices, list_of(:price)
+    field :name, non_null(:string)
+    field :prices, list_of(:price_prop)
+    field :cost_prices, list_of(:price_prop)
+    field :medias, list_of(:media_prop)
+    field :options, list_of(:option_prop)
     field :position, non_null(:integer)
   end
 
@@ -66,7 +94,9 @@ defmodule BsideWeb.Schema.CatalogTypes do
     field :description, :string
     field :slug, non_null(:string)
     field :sku, non_null(:string)
-    field :prices, list_of(:price)
+    field :prices, list_of(:price_prop)
+    field :cost_prices, list_of(:price_prop)
+    field :medias, list_of(:media_prop)
     field :position, non_null(:integer)
     field :vendor_id, non_null(:id)
   end

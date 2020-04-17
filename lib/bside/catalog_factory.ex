@@ -90,16 +90,18 @@ defmodule Bside.CatalogFactory do
     }
   end
 
+  def product_option_prop_factory do
+    %Catalog.Embedded.ProductOptionProp{
+      name: sequence(:name, &"Option #{&1}"),
+      description: sequence(:description, &"Option description #{&1}"),
+      options: build_list(3, :option_size)
+    }
+  end
+
   def attribute_prop_factory do
     %{
       name: sequence(:name, &"option-#{&1}"),
       value: sequence(:value, &"value-#{&1}")
-    }
-  end
-
-  def product_option_prop_factory do
-    %{
-      name: sequence(:name, &"option-#{&1}")
     }
   end
 
@@ -124,6 +126,7 @@ defmodule Bside.CatalogFactory do
 
   def media_prop_factory,
     do: %{
+      name: sequence(:name, &"Image #{&1}"),
       url: sequence(:image, &"image_#{&1}.png"),
       type: "image"
     }
@@ -139,5 +142,4 @@ defmodule Bside.CatalogFactory do
       value: sequence(:value, ["XL", "L", "M", "S", "XS"]),
       image: sequence(:image, &"image_#{&1}.png")
     }
-
 end

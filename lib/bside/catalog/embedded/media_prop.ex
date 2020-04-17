@@ -7,7 +7,7 @@ defmodule Bside.Catalog.Embedded.MediaProp do
 
   embedded_schema do
     field :name, :string
-    field :src, :string
+    field :url, :string
     field :type, :string
   end
 
@@ -16,11 +16,12 @@ defmodule Bside.Catalog.Embedded.MediaProp do
     media
     |> cast(attrs, [
       :name,
-      :src,
+      :url,
       :type
     ])
     |> validate_required([
       :name,
+      :url,
       :type
     ])
   end

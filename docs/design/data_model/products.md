@@ -128,7 +128,7 @@ table: product_option_definitions
 
 - name: string
 - description: string
-- values: string
+- options: string
 
 ## Vendors
 

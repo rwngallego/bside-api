@@ -11,6 +11,9 @@ defmodule BsideTest.ProductSchemaTest do
 
   @api_path "/graphql/v1"
   @price_fields %{value: :integer, currency: :string}
+  @attribute_fields %{name: :string, value: :string}
+  @option_fields %{name: :string}
+  @media_fields %{name: :string, source: :string, type: :string}
 
   describe "products" do
     test "get by id", %{conn: conn, products: [product | _]} do
@@ -20,6 +23,7 @@ defmodule BsideTest.ProductSchemaTest do
           id
           name
           description
+          position
           prices {
             value
             currency
@@ -28,20 +32,38 @@ defmodule BsideTest.ProductSchemaTest do
             value
             currency
           }
-          position
+          attributes {
+            name
+            value
+          }
+          options {
+            name
+            options {
+              name
+              value
+            }
+          }
+          medias {
+            name
+            url
+            type
+          }
         }
       }
       """
 
-      %{"data" => %{"product" => result}} =
+      %{"data" => %{"product" => response}} =
         conn
         |> post(@api_path, %{query: query})
         |> json_response(200)
 
       fields = %{id: :id, name: :string, description: :string, position: :integer}
-      assert_equivalent_graphql(product, result, fields)
-      assert_equivalent_graphql(product.prices, result["prices"], @price_fields)
-      assert_equivalent_graphql(product.cost_prices, result["cost_prices"], @price_fields)
+      assert_equivalent_graphql(product, response, fields)
+      assert_equivalent_graphql(product.prices, response["prices"], @price_fields)
+      assert_equivalent_graphql(product.cost_prices, response["cost_prices"], @price_fields)
+      assert_equivalent_graphql(product.attributes, response["attributes"], @attribute_fields)
+      assert_equivalent_graphql(product.options, response["options"], @option_fields)
+      assert_equivalent_graphql(product.medias, response["medias"], @media_fields)
     end
 
     test "get list", %{conn: conn, products: products} do
@@ -60,14 +82,13 @@ defmodule BsideTest.ProductSchemaTest do
       }
       """
 
-      %{"data" => %{"products" => result}} =
+      %{"data" => %{"products" => response}} =
         conn
         |> post(@api_path, %{query: query})
         |> json_response(200)
 
       fields = %{id: :id, name: :string, description: :string, position: :integer}
-      assert_equivalent_graphql(products, result, fields)
-      # TODO: assert prices
+      assert_equivalent_graphql(products, response, fields)
     end
 
     test "return error when not found", %{conn: conn} do

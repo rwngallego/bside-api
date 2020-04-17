@@ -6,7 +6,7 @@ defmodule Bside.Catalog.Embedded.ProductOptionItemProp do
   import Ecto.Changeset
 
   embedded_schema do
-    field :name, :string
+    field :value, :string
     field :image, :string
   end
 
@@ -14,11 +14,11 @@ defmodule Bside.Catalog.Embedded.ProductOptionItemProp do
   def changeset(entity, attrs) do
     entity
     |> cast(attrs, [
-      :name,
+      :value,
       :image
     ])
     |> validate_required([
-      :name,
+      :value,
       :image
     ])
   end

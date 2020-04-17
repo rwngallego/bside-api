@@ -27,7 +27,7 @@ defmodule BsideWeb.Schema do
       resolve(&CatalogResolver.get_product/3)
     end
 
-    @desc "Get all the categories"
+    @desc "Get all the products"
     field :products, list_of(:product) do
       resolve(&CatalogResolver.list_products/3)
     end
