@@ -1,11 +1,11 @@
-defmodule BsideTest.ProductSchemaTest do
+defmodule BsideTest.VariantSchemaTest do
   use BsideWeb.ConnCase
   import AbsintheErrorPayload.TestHelper
   import Bside.CatalogFactory
 
   setup do
     [
-      products: insert_list(3, :product)
+      variants: insert_list(3, :variant)
     ]
   end
 
@@ -15,21 +15,17 @@ defmodule BsideTest.ProductSchemaTest do
   @option_fields %{name: :string}
   @media_fields %{name: :string, source: :string, type: :string}
 
-  describe "products" do
-    test "get by id", %{conn: conn, products: [product | _]} do
+  describe "variants" do
+    test "get by id", %{conn: conn, variants: [variant | _]} do
       query = """
       {
-        product(id: "#{product.id}") {
+        variant(id: "#{variant.id}") {
           id
           name
           description
           position
           sku
           prices {
-            value
-            currency
-          }
-          cost_prices {
             value
             currency
           }
@@ -53,24 +49,23 @@ defmodule BsideTest.ProductSchemaTest do
       }
       """
 
-      %{"data" => %{"product" => response}} =
+      %{"data" => %{"variant" => response}} =
         conn
         |> post(@api_path, %{query: query})
         |> json_response(200)
 
       fields = %{id: :id, name: :string, description: :string, position: :integer, sku: :string}
-      assert_equivalent_graphql(product, response, fields)
-      assert_equivalent_graphql(product.prices, response["prices"], @price_fields)
-      assert_equivalent_graphql(product.cost_prices, response["cost_prices"], @price_fields)
-      assert_equivalent_graphql(product.attributes, response["attributes"], @attribute_fields)
-      assert_equivalent_graphql(product.options, response["options"], @option_fields)
-      assert_equivalent_graphql(product.medias, response["medias"], @media_fields)
+      assert_equivalent_graphql(variant, response, fields)
+      assert_equivalent_graphql(variant.prices, response["prices"], @price_fields)
+      assert_equivalent_graphql(variant.attributes, response["attributes"], @attribute_fields)
+      assert_equivalent_graphql(variant.options, response["options"], @option_fields)
+      assert_equivalent_graphql(variant.medias, response["medias"], @media_fields)
     end
 
-    test "get list", %{conn: conn, products: products} do
+    test "get list", %{conn: conn, variants: variants} do
       query = """
       {
-        products {
+        variants {
           id
           name
           description
@@ -83,19 +78,19 @@ defmodule BsideTest.ProductSchemaTest do
       }
       """
 
-      %{"data" => %{"products" => response}} =
+      %{"data" => %{"variants" => response}} =
         conn
         |> post(@api_path, %{query: query})
         |> json_response(200)
 
       fields = %{id: :id, name: :string, description: :string, position: :integer}
-      assert_equivalent_graphql(products, response, fields)
+      assert_equivalent_graphql(variants, response, fields)
     end
 
     test "return error when not found", %{conn: conn} do
       query = """
       {
-        product(id: "9999") {
+        variant(id: "9999") {
           id
         }
       }
@@ -106,27 +101,26 @@ defmodule BsideTest.ProductSchemaTest do
         |> post(@api_path, %{query: query})
         |> json_response(200)
 
-      assert nil == res["data"]["product"]
+      assert nil == res["data"]["variant"]
       assert "not_found" == List.first(res["errors"])["message"]
     end
 
     test "create", %{conn: conn} do
-      vendor = insert(:vendor)
+      product = insert(:product)
 
       query = """
         mutation {
-          createProduct(
-            product: {
-              name: "Test product creation",
+          createVariant(
+            variant: {
+              name: "Test variant creation",
               description: "Description 1",
-              slug: "product",
               sku: "A00001",
               prices: [{
                 value: 1000,
                 currency: "SEK"
               }]
               position: 1,
-              vendor_id: #{vendor.id}
+              product_id: #{product.id}
             }
           ) {
             result {
@@ -143,33 +137,32 @@ defmodule BsideTest.ProductSchemaTest do
         }
       """
 
-      %{"data" => %{"createProduct" => response}} =
+      %{"data" => %{"createVariant" => response}} =
         conn
         |> post(@api_path, %{query: query})
         |> json_response(200)
 
-      assert response["result"]["name"] == "Test product creation"
+      assert response["result"]["name"] == "Test variant creation"
       assert response["messages"] == []
       assert response["successful"] == true
     end
 
     test "return field error", %{conn: conn} do
-      vendor = insert(:vendor)
+      product = insert(:product)
 
       query = """
         mutation {
-          createProduct(
-            product: {
+          createVariant(
+            variant: {
               name: "",
               description: "Description 1",
-              slug: "product",
               sku: "A00001",
               prices: [{
                 value: 1000,
                 currency: "SEK"
               }]
               position: 1,
-              vendor_id: #{vendor.id}
+              product_id: #{product.id}
             }
           ) {
             result {
@@ -186,7 +179,7 @@ defmodule BsideTest.ProductSchemaTest do
         }
       """
 
-      %{"data" => %{"createProduct" => response}} =
+      %{"data" => %{"createVariant" => response}} =
         conn
         |> post(@api_path, %{query: query})
         |> json_response(200)

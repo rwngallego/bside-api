@@ -9,7 +9,11 @@ defmodule BsideWeb.Schema.CatalogTypes do
 
   import_types(AbsintheErrorPayload.ValidationMessageTypes)
 
-  @desc "Categories"
+  #----------------------------------------------------------------------------
+  # Types
+  #----------------------------------------------------------------------------
+
+  @desc "Category"
   object :category do
     field :id, non_null(:id)
     field :name, non_null(:string)
@@ -27,7 +31,7 @@ defmodule BsideWeb.Schema.CatalogTypes do
     field :position, :integer
   end
 
-  @desc "Editable category fields"
+  @desc "Category input"
   input_object :create_category_params do
     field :name, non_null(:string)
     field :description, non_null(:string)
@@ -75,7 +79,7 @@ defmodule BsideWeb.Schema.CatalogTypes do
     field :options, non_null(list_of(:option_value_prop))
   end
 
-  @desc "Products"
+  @desc "Product"
   object :product do
     field :id, non_null(:id)
     field :attributes, list_of(:attribute_prop)
@@ -86,9 +90,10 @@ defmodule BsideWeb.Schema.CatalogTypes do
     field :medias, list_of(:media_prop)
     field :options, list_of(:option_prop)
     field :position, non_null(:integer)
+    field :sku, non_null(:string)
   end
 
-  @desc "Products"
+  @desc "Product input"
   input_object :create_product_params do
     field :name, non_null(:string)
     field :description, :string
@@ -101,24 +106,59 @@ defmodule BsideWeb.Schema.CatalogTypes do
     field :vendor_id, non_null(:id)
   end
 
+  @desc "Variants"
+  object :variant do
+    field :id, non_null(:id)
+    field :attributes, list_of(:attribute_prop)
+    field :description, :string
+    field :medias, list_of(:media_prop)
+    field :name, non_null(:string)
+    field :options, list_of(:option_prop)
+    field :position, non_null(:integer)
+    field :prices, list_of(:price_prop)
+    field :sku, non_null(:string)
+    field :product_id, non_null(:id)
+  end
+
+  @desc "Variant input"
+  input_object :create_variant_params do
+    field :description, :string
+    field :medias, list_of(:media_prop)
+    field :name, non_null(:string)
+    field :options, list_of(:option_prop)
+    field :position, non_null(:integer)
+    field :prices, list_of(:price_prop)
+    field :sku, non_null(:string)
+    field :product_id, non_null(:id)
+  end
+
   payload_object(:category_payload, :category)
   payload_object(:product_payload, :product)
+  payload_object(:variant_payload, :variant)
 
+  #----------------------------------------------------------------------------
   # Mutations
-  object :category_mutations do
+  #----------------------------------------------------------------------------
+
+  object :catalog_mutations do
     @desc "Create a new category"
     field :create_category, :category_payload do
       arg(:category, :create_category_params)
       resolve(&CatalogResolver.create_category/3)
       middleware(&build_payload/2)
     end
-  end
 
-  object :product_mutations do
     @desc "Create a new product"
     field :create_product, :product_payload do
       arg(:product, :create_product_params)
       resolve(&CatalogResolver.create_product/3)
+      middleware(&build_payload/2)
+    end
+
+    @desc "Create a new variant"
+    field :create_variant, :variant_payload do
+      arg(:variant, :create_variant_params)
+      resolve(&CatalogResolver.create_variant/3)
       middleware(&build_payload/2)
     end
   end

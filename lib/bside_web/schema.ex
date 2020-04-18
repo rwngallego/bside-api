@@ -31,10 +31,20 @@ defmodule BsideWeb.Schema do
     field :products, list_of(:product) do
       resolve(&CatalogResolver.list_products/3)
     end
+
+    @desc "Get a variant"
+    field :variant, :variant do
+      arg(:id, non_null(:id))
+      resolve(&CatalogResolver.get_variant/3)
+    end
+
+    @desc "Get all the variants"
+    field :variants, list_of(:variant) do
+      resolve(&CatalogResolver.list_variants/3)
+    end
   end
 
   mutation do
-    import_fields(:category_mutations)
-    import_fields(:product_mutations)
+    import_fields(:catalog_mutations)
   end
 end

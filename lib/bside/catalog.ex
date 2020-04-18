@@ -258,6 +258,20 @@ defmodule Bside.Catalog do
   def get_variant!(id), do: Repo.get!(Variant, id)
 
   @doc """
+  Gets a single variant.
+
+  ## Examples
+
+      iex> get_variant(123)
+      %Variant{}
+
+      iex> get_variant(456)
+      nil
+
+  """
+  def get_variant(id), do: Repo.get(Variant, id)
+
+  @doc """
   Creates a variant.
 
   ## Examples
@@ -354,6 +368,20 @@ defmodule Bside.Catalog do
   def get_vendor!(id), do: Repo.get!(Vendor, id)
 
   @doc """
+  Gets a single vendor.
+
+  ## Examples
+
+      iex> get_vendor(123)
+      %Vendor{}
+
+      iex> get_vendor(456)
+      nil
+
+  """
+  def get_vendor(id), do: Repo.get(Vendor, id)
+
+  @doc """
   Creates a vendor.
 
   ## Examples
@@ -448,6 +476,20 @@ defmodule Bside.Catalog do
 
   """
   def get_product_option!(id), do: Repo.get!(ProductOption, id)
+
+  @doc """
+  Gets a single product_option.
+
+  ## Examples
+
+      iex> get_product_option(123)
+      %ProductOption{}
+
+      iex> get_product_option(456)
+      nil
+
+  """
+  def get_product_option(id), do: Repo.get(ProductOption, id)
 
   @doc """
   Creates a product_option.
