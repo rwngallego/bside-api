@@ -2,6 +2,8 @@
 
 ![CI/CD](https://github.com/rwngallego/bside/workflows/CI/CD/badge.svg)
 
+> This project is no longer continued.
+
 Runs the API server
 
 ## Quick start
